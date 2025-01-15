@@ -11,6 +11,27 @@
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
       "args": ["-u", "tdd", "--timeout", "999999", "--colors"],
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Debug ava tests in packages/json(pnpm)",
+      "type": "node",
+      "request": "launch",
+
+      //
+      // Binstubs (files in node_modules/.bin) are always shell files, not symlinks to JS files.
+      // If you expect the file to be a JS file, reference the original file directly instead, as described:
+      // https://github.com/pnpm/pnpm/issues/736
+      //
+      "runtimeExecutable": "sh",
+
+      "cwd": "${workspaceFolder}/packages/json",
+      "program": "${workspaceFolder}/node_modules/.bin/ava",
+      "console": "integratedTerminal",
+      // the visibility of the Debug Console panel during a debugging session.
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_OPTIONS": "--experimental-vm-modules"
+      }
     }
   ]
 }
